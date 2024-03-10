@@ -3,6 +3,10 @@ import Button from "@/app/components/Button";
 import Input from "@/app/components/Inputs/Input";
 import React, { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import AuthSocialButton from "../../(site)/components/AuthSocialButton";
+import { BiLogoGithub } from "react-icons/bi";
+import { FaFacebookMessenger } from "react-icons/fa";
+import { BiLogoGmail } from "react-icons/bi";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -69,7 +73,13 @@ export default function AuthForm() {
       >
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {variant === "REGISTER" && (
-            <Input id="name" label="Name" register={register} errors={errors} />
+            <Input
+              id="name"
+              label="Name"
+              register={register}
+              errors={errors}
+              disabled={isLoading}
+            />
           )}
           <Input
             id="email"
@@ -77,6 +87,7 @@ export default function AuthForm() {
             type="email"
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
           <Input
             id="password"
@@ -84,6 +95,7 @@ export default function AuthForm() {
             type="password"
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
           <div>
             <Button disabled={isLoading} fullWidth type="submit">
@@ -101,6 +113,26 @@ export default function AuthForm() {
                 Or continue with
               </span>
             </div>
+          </div>
+          <div className="mt-6 flex gap-2">
+            <AuthSocialButton
+              icon={FaFacebookMessenger}
+              onClick={() => socialAction("facebook")}
+            />
+            <AuthSocialButton
+              icon={BiLogoGmail}
+              onClick={() => socialAction("gmail")}
+            />
+          </div>
+        </div>
+        <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
+          <div>
+            {variant === "LOGIN"
+              ? "New to Echo Room?"
+              : "Already have an account?"}
+          </div>
+          <div onClick={toggleVariant} className="underline cursor-pointer">
+            {variant === "LOGIN" ? "Create an account" : "Login"}
           </div>
         </div>
       </div>
