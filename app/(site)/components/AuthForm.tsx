@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import Button from "@/app/components/Button";
 import Input from "@/app/components/Inputs/Input";
 import React, { useCallback, useState } from "react";
@@ -7,6 +8,7 @@ import AuthSocialButton from "../../(site)/components/AuthSocialButton";
 import { BiLogoGithub } from "react-icons/bi";
 import { FaFacebookMessenger } from "react-icons/fa";
 import { BiLogoGmail } from "react-icons/bi";
+import toast from "react-hot-toast";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -38,7 +40,10 @@ export default function AuthForm() {
     setIsLoading(true);
 
     if (variant === "REGISTER") {
-      // Axios Register
+      axios
+        .post("/api/register", data)
+        .catch(() => toast.error("Somthing went wrong!"))
+        .finally(() => setIsLoading(false));
     }
 
     if (variant === "LOGIN") {
